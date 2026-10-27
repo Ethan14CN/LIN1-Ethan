@@ -2,7 +2,7 @@
 
 Scripts d'automatisation de l'infrastructure **LIN1-LABO** réalisée dans le cadre du module LIN1 (CPNV — Technicien ES en Ingénierie des systèmes).
 
-Auteur : Ethan
+Auteur : Ethan Martin
 
 ## Contenu
 
