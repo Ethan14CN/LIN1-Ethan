@@ -10,6 +10,7 @@ Auteur : Ethan
 |---|---|---|
 | [`SRV-LIN1-01.sh`](SRV-LIN1-01.sh) | SRV-LIN1-01 (`10.10.40.11`) | Réseau et passerelle (routage + NAT), DNS (BIND9), DHCP (isc-dhcp-server), annuaire LDAP (OpenLDAP) avec peuplement, LDAP Account Manager |
 | [`SRV-LIN1-02.sh`](SRV-LIN1-02.sh) | SRV-LIN1-02 (`10.10.40.22`) | Réseau, montage NFS du NAS, Nextcloud 33 (Apache, MariaDB, PHP 8.2) en HTTP/HTTPS, intégration LDAP, dossiers de groupe, quotas, agenda |
+| [`Scripts-TEST/SRV-LIN1-02-TEST.sh`](Scripts-TEST/SRV-LIN1-02-TEST.sh) | SRV-LIN1-02 (test) | Variante de `SRV-LIN1-02.sh` pour une VM de test : identique, mais monte l'export `/export/nextcloud-test` afin de ne pas toucher aux données de production sur le NAS |
 
 ## Architecture
 
@@ -38,6 +39,7 @@ Domaine : `lin1-labo.local` — Base LDAP : `dc=lin1-labo,dc=local`
 - **SRV-LIN1-02** : une carte `ens33` sur le réseau interne.
 - Le service DHCP intégré de VMware doit être **désactivé** sur le réseau interne.
 - Pour SRV-LIN1-02 : SRV-LIN1-01 opérationnel, et NAS-LIN1-01 (OpenMediaVault) exportant `/export/nextcloud-data` vers `10.10.40.22` avec les options `rw,no_root_squash`.
+- Pour la variante de test : même chose avec l'export `/export/nextcloud-test`.
 
 ## Utilisation
 
@@ -50,7 +52,7 @@ scp SRV-LIN1-01.sh ethan@<ip-de-la-vm>:~/
 # sur la VM, en root
 su -
 cd /home/ethan
-sed -i 's/\r$//' SRV-LIN1-01.sh      # retire les fins de ligne Windows éventuelles
+sed -i 's/\r$//' SRV-LIN1-01.sh      # retire les fins de ligne Windows éventuelles (inutile si cloné depuis GitHub, cf. .gitattributes)
 nohup bash SRV-LIN1-01.sh > install.log 2>&1 &
 tail -f install.log
 ```
